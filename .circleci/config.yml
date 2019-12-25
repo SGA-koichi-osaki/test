@@ -14,4 +14,4 @@ jobs:
             git config --global user.name "Koichi Osaki"
             git config --global user.email "Koichi.Osaki@sony.com"
             repo init --depth=1 -u https://android.googlesource.com/platform/manifest
-            repo sync
+            repo sync -j $(nproc)
