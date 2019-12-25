@@ -6,5 +6,10 @@ jobs:
       resource_class: gpu.nvidia.medium
       image: ubuntu-1604-cuda-10.1:201909-23
     steps:
+      - run:
+        command: |
+          curl https://storage.googleapis.com/git-repo-downloads/repo > repo
+          chmod a+x repo
+          PATH=.:$PATH
       - run: repo init -u https://android.googlesource.com/platform/manifest
       - run: repo sync
