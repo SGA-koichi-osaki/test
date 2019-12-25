@@ -8,8 +8,10 @@ jobs:
     steps:
       - run:
           command: |
+            PATH=.:$PATH
             curl https://storage.googleapis.com/git-repo-downloads/repo > repo
             chmod a+x repo
-            PATH=.:$PATH
+            git config --global user.name "Koichi Osaki"
+            git config --global user.email "Koichi.Osaki@sony.com"
             repo init -u https://android.googlesource.com/platform/manifest
             repo sync
