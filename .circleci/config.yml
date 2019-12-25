@@ -20,5 +20,5 @@ jobs:
           name: lunch & make
           command: |
             source build/envsetup.sh
-            lunch aosp_arm64-eng
+            lunch aosp_arm64-userdebug
             m
