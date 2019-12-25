@@ -11,5 +11,5 @@ jobs:
             curl https://storage.googleapis.com/git-repo-downloads/repo > repo
             chmod a+x repo
             PATH=.:$PATH
-      - run: repo init -u https://android.googlesource.com/platform/manifest
-      - run: repo sync
+            repo init -u https://android.googlesource.com/platform/manifest
+            repo sync
