@@ -2,9 +2,9 @@ version: 2.1
 
 jobs:
   build:
-    machine:
-      resource_class: gpu.nvidia.medium
-      image: ubuntu-1604-cuda-10.1:201909-23
+    docker:
+      - image: ubuntu:bionic
+    resource_class: 2xlarge+ 
     steps:
       - run:
           name: repo init & repo sync
@@ -20,5 +20,5 @@ jobs:
           name: lunch & make
           command: |
             source build/envsetup.sh
-            lunch aosp_arm64-userdebug
+            lunch aosp_arm64-eng
             m
