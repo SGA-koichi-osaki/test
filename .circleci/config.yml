@@ -6,4 +6,5 @@ jobs:
       resource_class: gpu.nvidia.medium
       image: ubuntu-1604-cuda-10.1:201909-23
     steps:
-      - run: ls
+      - run: repo init -u https://android.googlesource.com/platform/manifest
+      - run: repo sync
