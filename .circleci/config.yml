@@ -4,7 +4,7 @@ jobs:
   build:
     docker:
       - image: buildpack-deps:bionic-scm
-    resource_class: 2xlarge+ 
+    resource_class: 2xlarge
     steps:
       - run:
           name: repo init & repo sync
