@@ -7,18 +7,6 @@ jobs:
       image: ubuntu-1604-cuda-10.1:201909-23
     steps:
       - run:
-          name: repo init & repo sync
           command: |
-            PATH=.:$PATH
-            curl https://storage.googleapis.com/git-repo-downloads/repo > repo
-            chmod a+x repo
-            git config --global user.name "Koichi Osaki"
-            git config --global user.email "Koichi.Osaki@sony.com"
-            repo init --depth=1 -u https://android.googlesource.com/platform/manifest
-            repo sync -j $(nproc)
-      - run:
-          name: lunch & make
-          command: |
-            source build/envsetup.sh
-            lunch aosp_arm64-userdebug
-            m
+            df -h
+            df -i
