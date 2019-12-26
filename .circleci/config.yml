@@ -8,5 +8,6 @@ jobs:
     steps:
       - run:
           command: |
+            pwd
             df -h
             df -i
