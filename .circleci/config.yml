@@ -10,7 +10,7 @@ jobs:
           name: install packages
           command: |
             apt update
-            apt install zip unzip
+            apt install -y zip unzip
       - run:
           name: repo init & repo sync
           command: |
