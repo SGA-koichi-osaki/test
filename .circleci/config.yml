@@ -34,12 +34,6 @@ jobs:
             repo init --depth=1 -u https://android.googlesource.com/platform/manifest -b android-10.0.0_r9
             repo sync -j4
       - run:
-          name: remove .repo
-          command: |
-            df -h
-            rm -rf .repo
-            df -h
-      - run:
           name: lunch & make
           command: |
             export USE_CCACHE=1
