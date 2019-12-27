@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: buildpack-deps:bionic
+      - image: ubuntu:trusty-20191217
     resource_class: 2xlarge
     steps:
       - run:
@@ -14,10 +14,10 @@ jobs:
       - run:
           name: install packages
           command: |
-            apt update
-            apt install -y git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc unzip
-            apt install -y rsync
-            apt install -y ccache
+            apt-get update
+            apt-get install -y git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc unzip
+            apt-get install -y rsync
+            apt-get install -y ccache curl
             which ccache
       - restore_cache:
           name: restoring cache of ccache
@@ -50,11 +50,13 @@ jobs:
             lunch aosp_arm64-userdebug
             m -j$(nproc)
       - save_cache:
+          when: always
           name: saving cache of ccache
           key: ccache-{{ .Branch }}
           paths:
             - ".ccache"
       - save_cache:
+          when: always
           name: saving cache of repo
           key: repo-{{ .Branch }}
           paths:
