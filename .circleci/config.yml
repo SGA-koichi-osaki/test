@@ -41,20 +41,20 @@ jobs:
           key: repo-{{ .Branch }}-{{ .BuildNum }}
           paths:
             - ".repo"
-      - restore_cache:
-          name: restoring cache of ccache
-          key: ccache-{{ .Branch }}-
+#      - restore_cache:
+#          name: restoring cache of ccache
+#          key: ccache-{{ .Branch }}-
       - run:
           name: lunch & make
           command: |
-            export USE_CCACHE=1
-            export CCACHE_DIR=.ccache
-            export CCACHE_EXEC=$(which ccache)
+#            export USE_CCACHE=1
+#            export CCACHE_DIR=.ccache
+#            export CCACHE_EXEC=$(which ccache)
             source build/envsetup.sh
             lunch aosp_arm64-userdebug
             m -j$(nproc)
-      - save_cache:
-          name: saving cache of ccache
-          key: ccache-{{ .Branch }}-{{ .BuildNum }}
-          paths:
-            - ".ccache"
+ #     - save_cache:
+ #         name: saving cache of ccache
+ #         key: ccache-{{ .Branch }}-{{ .BuildNum }}
+ #         paths:
+ #           - ".ccache"
