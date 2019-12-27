@@ -22,16 +22,8 @@ jobs:
             which ccache
             ccache --version
       - restore_cache:
-          name: restoring cache of ccache
-          key: ccache-{{ .Branch }}
-      - restore_cache:
           name: restoring cache of repo
-          key: repo-{{ .Branch }}
-      - run:
-          name: check cache
-          command: |
-            ls .ccache || true
-            ls .repo || true
+          key: repo-{{ .Branch }}-
       - run:
           name: repo init & repo sync
           command: |
@@ -42,6 +34,14 @@ jobs:
             git config --global user.email "Koichi.Osaki@sony.com"
             repo init --depth=1 -u https://android.googlesource.com/platform/manifest -b android-10.0.0_r9
             repo sync -j4
+      - save_cache:
+          name: saving cache of repo
+          key: repo-{{ .Branch }}-{{ .BuildNum }}
+          paths:
+            - ".repo"
+      - restore_cache:
+          name: restoring cache of ccache
+          key: ccache-{{ .Branch }}-
       - run:
           name: lunch & make
           command: |
@@ -52,14 +52,7 @@ jobs:
             lunch aosp_arm64-userdebug
             m -j$(nproc)
       - save_cache:
-          when: always
           name: saving cache of ccache
-          key: ccache-{{ .Branch }}
+          key: ccache-{{ .Branch }}-{{ .BuildNum }}
           paths:
             - ".ccache"
-      - save_cache:
-          when: always
-          name: saving cache of repo
-          key: repo-{{ .Branch }}
-          paths:
-            - ".repo"
