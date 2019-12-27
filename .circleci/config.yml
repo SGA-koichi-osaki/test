@@ -28,8 +28,8 @@ jobs:
       - run:
           name: check cache
           command: |
-            ls .ccache
-            ls .repo
+            ls .ccache || true
+            ls .repo || true
       - run:
           name: repo init & repo sync
           command: |
