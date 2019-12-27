@@ -4,7 +4,7 @@ jobs:
   build:
     docker:
       - image: ubuntu:trusty-20191217
-    resource_class: 2xlarge
+    resource_class: 2xlarge+
     steps:
       - run:
           name: environment
