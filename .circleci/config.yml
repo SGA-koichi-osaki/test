@@ -19,6 +19,7 @@ jobs:
             apt-get install -y rsync python
             apt-get install -y ccache curl
             which ccache
+            ccache --version
       - restore_cache:
           name: restoring cache of ccache
           key: ccache-{{ .Branch }}
