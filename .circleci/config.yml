@@ -4,7 +4,7 @@ jobs:
   build:
     docker:
       - image: ubuntu:trusty-20191217
-    resource_class: 2xlarge+
+    resource_class: 2xlarge
     steps:
       - run:
           name: environment
@@ -17,19 +17,15 @@ jobs:
             apt-get update
             apt-get install -y git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc unzip
             apt-get install -y rsync python
-            apt-get install -y ccache curl
+            apt-get install -y curl
+            echo "deb http://mirrors.kernel.org/ubuntu eoan main" >> /etc/apt/sources.list
+            apt-get update
+            apt-get install -y ccache
             which ccache
-      - restore_cache:
-          name: restoring cache of ccache
-          key: ccache-{{ .Branch }}
+            ccache --version
       - restore_cache:
           name: restoring cache of repo
-          key: repo-{{ .Branch }}
-      - run:
-          name: check cache
-          command: |
-            ls .ccache || true
-            ls .repo || true
+          key: repo-{{ .Branch }}-
       - run:
           name: repo init & repo sync
           command: |
@@ -40,6 +36,14 @@ jobs:
             git config --global user.email "Koichi.Osaki@sony.com"
             repo init --depth=1 -u https://android.googlesource.com/platform/manifest -b android-10.0.0_r9
             repo sync -j4
+      - save_cache:
+          name: saving cache of repo
+          key: repo-{{ .Branch }}-{{ .BuildNum }}
+          paths:
+            - ".repo"
+      - restore_cache:
+          name: restoring cache of ccache
+          key: ccache-{{ .Branch }}-
       - run:
           name: lunch & make
           command: |
@@ -50,14 +54,7 @@ jobs:
             lunch aosp_arm64-userdebug
             m -j$(nproc)
       - save_cache:
-          when: always
           name: saving cache of ccache
-          key: ccache-{{ .Branch }}
+          key: ccache-{{ .Branch }}-{{ .BuildNum }}
           paths:
             - ".ccache"
-      - save_cache:
-          when: always
-          name: saving cache of repo
-          key: repo-{{ .Branch }}
-          paths:
-            - ".repo"
