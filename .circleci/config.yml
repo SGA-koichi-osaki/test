@@ -23,9 +23,6 @@ jobs:
             apt-get install -y ccache
             which ccache
             ccache --version
-      - restore_cache:
-          name: restoring cache of repo
-          key: repo-{{ .Branch }}-
       - run:
           name: repo init & repo sync
           command: |
@@ -36,11 +33,6 @@ jobs:
             git config --global user.email "Koichi.Osaki@sony.com"
             repo init --depth=1 -u https://android.googlesource.com/platform/manifest -b android-10.0.0_r9
             repo sync -j$(nproc)
-      - save_cache:
-          name: saving cache of repo
-          key: repo-{{ .Branch }}-{{ .BuildNum }}
-          paths:
-            - ".repo"
       - run:
           name: lunch & make
           command: |
