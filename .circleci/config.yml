@@ -9,6 +9,7 @@ jobs:
       - run:
           name: repo init & repo sync
           command: |
+            pyenv global system 3.6.5
             PATH=.:$PATH
             curl https://storage.googleapis.com/git-repo-downloads/repo > repo
             chmod a+x repo
