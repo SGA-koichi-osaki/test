@@ -22,4 +22,4 @@ jobs:
           command: |
             source build/envsetup.sh
             lunch aosp_arm64-userdebug
-            m
+            m -j$(nproc)
